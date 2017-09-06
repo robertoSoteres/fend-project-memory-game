@@ -45,8 +45,7 @@ function createCards() {
 
 
 function displayCards(card){
-    card.addEventListener('click', function(){
-        console.log(this.className);
+    card.addEventListener('click', function(){        
         this.className += ' open show';
         openCards.push(card);
         if (openCards.length === 2){
@@ -56,9 +55,13 @@ function displayCards(card){
     })
 }
 
-function checkCards(cards){    
-    if(cards[0] === cards[1]){
-        return true;
+function checkCards(cards){
+    var carta1 = cards[0].getElementsByTagName('i');
+    var carta2 = cards[1].getElementsByTagName('i');
+    if(carta1[0].className === carta2[0].className){
+        cards[0].className = 'card match';
+        cards[1].className = 'card match';
+        
     }
     else{
         for(let i = 0; i < cards.length; i++){
