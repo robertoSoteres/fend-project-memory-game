@@ -9,6 +9,7 @@
  *   - add each card's HTML to the page
  */
 var openCards = [];
+var movements = 0;
 createCards();
 var restart = document.querySelector('.restart');
 restart.addEventListener('click', function(){    
@@ -32,6 +33,8 @@ function shuffle(array) {
 //creamos las cartas y las barajamos
 function createCards() {
     var arrayCards = [];
+    document.querySelector('.moves').innerHTML = movements;
+    document.querySelector('.stars').innerHTML = ''
     var deck = document.querySelector('.deck');
     var deckChildren = document.querySelector('.deck').getElementsByTagName('li');
     for (let i = 0; i < deckChildren.length; i++) {
@@ -56,29 +59,20 @@ function displayCards(card){
                 console.log("Esta carta ya está dada la vuelta");
             }
             else{
-                this.className += ' open show';    
+                this.className += ' open show';
                 openCards.push(card);
                 if (openCards.length === 2){
-                    checkCards(openCards);
-                    openCards.splice(0,openCards.length);
-                }
-                
-                /* VERSION CON setTimeOut - Al acertar, se para también, buscar otro fix    
-                
-                if (openCards.length === 2){
-                    setTimeout(function(){ 
+                    setTimeout(function(){
                         checkCards(openCards);
                         openCards.splice(0,openCards.length);
-                    }, 1500);
-                    
-                    
-                } */
-            }                                                            
+                    }, 700);
+                }
+            }
         }
     })
 }
 
-//comprblamos si las cartas coinciden
+//comprobamos si las cartas coinciden
 function checkCards(cards){
     var carta1 = cards[0].getElementsByTagName('i');
     var carta2 = cards[1].getElementsByTagName('i');
@@ -92,6 +86,7 @@ function checkCards(cards){
             cards[i].className ='card';
         }
     }
+    updateMovements();
 }
 
 //comprobamos si la carta ya está abierta
@@ -99,13 +94,21 @@ function isOpenMatch(card, type){
     for(let i = 0; i < card.classList.length; i++){
         if(card.classList[i] === type){
             return true;
-        }      
+        }
     }
     return false;
 }
 
 function reset(){
     var arrayCards = [];
+    //reset count
+    document.querySelector('.moves').innerHTML = 0;
+    movements = 0;
+    
+    //reset stars
+    document.querySelector('.stars').innerHTML = '';
+    
+    //reset cards
     var deck = document.querySelector('.deck');
     var deckChildren = document.querySelector('.deck').getElementsByTagName('li');
     for (let i = 0; i < deckChildren.length; i++) {
@@ -117,9 +120,20 @@ function reset(){
         newArrayCards[i].className = 'card';
         openCards.splice(0,openCards.length);
         deck.appendChild(newArrayCards[i]);
-    }  
+    }
 }
 
+function updateMovements(){
+    //update count
+    movements += 1;
+    document.querySelector('.moves').innerHTML = movements;
+    //update stars
+    document.querySelector('.stars').innerHTML +=  '<li><i class="fa fa-star"></i></li>';
+}
+
+function allCardsAreOpen(){
+    
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
