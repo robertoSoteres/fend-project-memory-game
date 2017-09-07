@@ -44,13 +44,20 @@ function createCards() {
 }
 
 
+
+
 function displayCards(card){
-    card.addEventListener('click', function(){        
-        this.className += ' open show';
-        openCards.push(card);
-        if (openCards.length === 2){
-            checkCards(openCards);
-            openCards.splice(0,openCards.length);
+    card.addEventListener('click', function(){
+        if(isOpen(this)){
+            alert("YA ESTA DADA LA VUELTA");
+        }
+        else{
+            this.className += ' open show';    
+            openCards.push(card);
+            if (openCards.length === 2){
+                checkCards(openCards);
+                openCards.splice(0,openCards.length);
+            }                                            
         }
     })
 }
@@ -70,7 +77,14 @@ function checkCards(cards){
     }
 }
 
-
+function isOpen(card){
+    for(let i = 0; i < card.classList.length; i++){
+        if(card.classList[i] === 'match'){
+            return true;
+        }      
+    }
+    return false;
+}
 
 
 /*
