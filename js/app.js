@@ -12,6 +12,11 @@ var openCards = [];
 createCards();
 
 
+var restart = document.querySelector('.restart');
+restart.addEventListener('click', function(){    
+    reset();
+});
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -27,6 +32,8 @@ function shuffle(array) {
     return array;
 }
 
+
+//creamos las cartas y las barajamos
 function createCards() {
     var arrayCards = [];
     var deck = document.querySelector('.deck');
@@ -40,28 +47,33 @@ function createCards() {
         deck.appendChild(newArrayCards[i]);
         displayCards(newArrayCards[i]);
     }
-    
 }
 
 
 
-
+//añadimos la funcionalidad de las cartas
 function displayCards(card){
     card.addEventListener('click', function(){
-        if(isOpen(this)){
-            alert("YA ESTA DADA LA VUELTA");
+        if(isOpenMatch(this,'match')){
+            console.log("CARTA EMPAREJADA, ESTÁ BLOQUEADA");
         }
         else{
-            this.className += ' open show';    
-            openCards.push(card);
-            if (openCards.length === 2){
-                checkCards(openCards);
-                openCards.splice(0,openCards.length);
-            }                                            
+            if(isOpenMatch(this,'open')){
+                console.log("Esta carta ya está dada la vuelta");
+            }
+            else{
+                this.className += ' open show';    
+                openCards.push(card);
+                if (openCards.length === 2){
+                    checkCards(openCards);
+                    openCards.splice(0,openCards.length);
+                }            
+            }                                                            
         }
     })
 }
 
+//comprblamos si las cartas coinciden
 function checkCards(cards){
     var carta1 = cards[0].getElementsByTagName('i');
     var carta2 = cards[1].getElementsByTagName('i');
@@ -77,15 +89,36 @@ function checkCards(cards){
     }
 }
 
-function isOpen(card){
+
+//comprobamos si la carta ya está abierta
+function isOpenMatch(card, type){
     for(let i = 0; i < card.classList.length; i++){
-        if(card.classList[i] === 'match'){
+        if(card.classList[i] === type){
             return true;
         }      
     }
     return false;
 }
 
+
+
+
+
+function reset(){
+    var arrayCards = [];
+    var deck = document.querySelector('.deck');
+    var deckChildren = document.querySelector('.deck').getElementsByTagName('li');
+    for (let i = 0; i < deckChildren.length; i++) {
+        arrayCards.push(deckChildren[i]);
+    }
+    var newArrayCards = shuffle(arrayCards);
+    deck.innerHTML = '';
+    for (let i = 0; i < newArrayCards.length; i++) {
+        newArrayCards[i].className = 'card';
+        openCards.splice(0,openCards.length);
+        deck.appendChild(newArrayCards[i]);
+    }  
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
