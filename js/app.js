@@ -10,13 +10,10 @@
  */
 var openCards = [];
 createCards();
-
-
 var restart = document.querySelector('.restart');
 restart.addEventListener('click', function(){    
     reset();
 });
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -31,7 +28,6 @@ function shuffle(array) {
     }
     return array;
 }
-
 
 //creamos las cartas y las barajamos
 function createCards() {
@@ -49,8 +45,6 @@ function createCards() {
     }
 }
 
-
-
 //añadimos la funcionalidad de las cartas
 function displayCards(card){
     card.addEventListener('click', function(){
@@ -67,7 +61,18 @@ function displayCards(card){
                 if (openCards.length === 2){
                     checkCards(openCards);
                     openCards.splice(0,openCards.length);
-                }            
+                }
+                
+                /* VERSION CON setTimeOut - Al acertar, se para también, buscar otro fix    
+                
+                if (openCards.length === 2){
+                    setTimeout(function(){ 
+                        checkCards(openCards);
+                        openCards.splice(0,openCards.length);
+                    }, 1500);
+                    
+                    
+                } */
             }                                                            
         }
     })
@@ -89,7 +94,6 @@ function checkCards(cards){
     }
 }
 
-
 //comprobamos si la carta ya está abierta
 function isOpenMatch(card, type){
     for(let i = 0; i < card.classList.length; i++){
@@ -99,10 +103,6 @@ function isOpenMatch(card, type){
     }
     return false;
 }
-
-
-
-
 
 function reset(){
     var arrayCards = [];
