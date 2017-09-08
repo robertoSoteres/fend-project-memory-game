@@ -10,6 +10,7 @@
  */
 var openCards = [];
 var movements = 0;
+var totalCartasAbiertas = 0;
 createCards();
 var restart = document.querySelector('.restart');
 restart.addEventListener('click', function(){    
@@ -64,8 +65,8 @@ function displayCards(card){
                 if (openCards.length === 2){
                     setTimeout(function(){
                         checkCards(openCards);
-                        openCards.splice(0,openCards.length);
-                    }, 700);
+                        openCards.splice(0,openCards.length);                        
+                    }, 600);
                 }
             }
         }
@@ -76,9 +77,11 @@ function displayCards(card){
 function checkCards(cards){
     var carta1 = cards[0].getElementsByTagName('i');
     var carta2 = cards[1].getElementsByTagName('i');
+    
     if(carta1[0].className === carta2[0].className){
         cards[0].className = 'card match';
         cards[1].className = 'card match';
+        totalCartasAbiertas +=2;
         
     }
     else{
@@ -104,7 +107,7 @@ function reset(){
     //reset count
     document.querySelector('.moves').innerHTML = 0;
     movements = 0;
-    
+    totalCartasAbiertas =0;
     //reset stars
     document.querySelector('.stars').innerHTML = '';
     
@@ -126,13 +129,23 @@ function reset(){
 function updateMovements(){
     //update count
     movements += 1;
+    
     document.querySelector('.moves').innerHTML = movements;
     //update stars
     document.querySelector('.stars').innerHTML +=  '<li><i class="fa fa-star"></i></li>';
+    if(movements >=8){
+        comprobarCartasAbiertas(totalCartasAbiertas, movements);
+    }
 }
 
-function allCardsAreOpen(){
-    
+
+function comprobarCartasAbiertas(cartasAbiertas, moves){
+    if(cartasAbiertas === 16){
+    setTimeout(function(){
+        alert('Congrats! You have finished the game in ' + moves + ' moves!');
+    }, 300);
+
+    }
 }
 /*
  * set up the event listener for a card. If a card is clicked:
