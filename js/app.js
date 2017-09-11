@@ -81,7 +81,7 @@ function displayCards(card){
                 }
             }
         }
-    })
+    });
 }
 
 //comprobamos si las cartas coinciden

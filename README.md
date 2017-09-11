@@ -5,16 +5,21 @@
 * [Instructions](#instructions)
 * [Contributing](#contributing)
 
-## Instructions
+## How to play:
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+You should match al the pairs to win the game! Do your best and try to win the game in less time as you can!
 
-To get started, open `js/app.js` and start building out the app's functionality
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## Instructions:
 
-## Contributing
+1. Download all the project
+2. Open the index.html in your favorite browser.
+3. Let's play!
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Rules:
+
+- Find all the pairs.
+- If you win the game in less than 8 moves, your ratio''ll be 3! If you win the game between 8 and 14 moves, your ratio will be 2 and if you win in more than 14 moves, your ratio will be 1.
+- You can see your time. Try to do it better than the previous time!
+- Have fun! 
