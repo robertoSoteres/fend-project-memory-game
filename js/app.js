@@ -13,6 +13,18 @@ var movements = 0;
 var totalCartasAbiertas = 0;
 createCards();
 var restart = document.querySelector('.restart');
+var list = document.querySelector('.stars');
+
+var seconds = 1;
+var minutes = 0;
+var l = document.getElementById("number");
+window.setInterval(function(){
+    createTime(seconds, minutes);
+  
+},1000);
+
+
+
 restart.addEventListener('click', function(){    
     reset();
 });
@@ -34,8 +46,7 @@ function shuffle(array) {
 //creamos las cartas y las barajamos
 function createCards() {
     var arrayCards = [];
-    document.querySelector('.moves').innerHTML = movements;
-    document.querySelector('.stars').innerHTML = ''
+    document.querySelector('.moves').innerHTML = movements;    
     var deck = document.querySelector('.deck');
     var deckChildren = document.querySelector('.deck').getElementsByTagName('li');
     for (let i = 0; i < deckChildren.length; i++) {
@@ -111,6 +122,11 @@ function reset(){
     //reset stars
     document.querySelector('.stars').innerHTML = '';
     
+    //reset tune
+    minutes = 0;
+    seconds = 0;
+    l.innerHTML = "00:00";
+    
     //reset cards
     var deck = document.querySelector('.deck');
     var deckChildren = document.querySelector('.deck').getElementsByTagName('li');
@@ -128,25 +144,57 @@ function reset(){
 
 function updateMovements(){
     //update count
-    movements += 1;
-    
+    movements += 1;    
     document.querySelector('.moves').innerHTML = movements;
-    //update stars
-    document.querySelector('.stars').innerHTML +=  '<li><i class="fa fa-star"></i></li>';
+    
+        console.log("ENTRO");
+    //update stars    
     if(movements >=8){
         comprobarCartasAbiertas(totalCartasAbiertas, movements);
     }
+    
+    if (movements === 8 || movements === 14){
+         list.removeChild(list.childNodes[0]);
+         list.removeChild(list.childNodes[0]);
+    }
+    
+    
+    
 }
 
 
 function comprobarCartasAbiertas(cartasAbiertas, moves){
     if(cartasAbiertas === 16){
     setTimeout(function(){
-        alert('Congrats! You have finished the game in ' + moves + ' moves!');
+        var time = document.getElementById("number").textContent;
+        alert('Congrats! You have finished the game in ' + moves + ' moves! \n\nYour time: ' + time + '\nYour rating is: ' + document.querySelectorAll('.stars>li').length);
+        reset();
     }, 300);
 
     }
 }
+
+
+function createTime(secs, min){    
+ if (secs > 59){
+        minutes++;
+        min++;
+        seconds = 0;
+        secs = 0;
+    }
+    if (min <10){
+        min = '0' + min;
+        
+    }   
+    if (secs <10){
+        secs = '0'+ secs;
+        
+        
+    }            
+    l.innerHTML = min +":"+ secs;
+    seconds++;
+}
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
